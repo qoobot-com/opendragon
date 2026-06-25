@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+.vuenyc/
+.nuxt/
+.next/
+.out/
+.dist/
+.cache/
+
+# Build outputs
+dist/
+build/
+out/
+target/
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+.env
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# OS
+Thumbs.db
+Desktop.ini

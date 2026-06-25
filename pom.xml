@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>4.0.2</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.qoobot</groupId>
+    <artifactId>opendragon</artifactId>
+    <version>${global.version}</version>
+    <packaging>pom</packaging>
+    <name>opendragon</name>
+    <description>Virtual human system based on microservices, big data, and AI</description>
+    <url>https://github.com/qoobot-com/opendragon</url>
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>team-lead</id>
+            <name>Team Lead</name>
+            <email>parker_1225@163.com</email>
+            <timezone>+8</timezone>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:https://github.com/qoobot-com/opendragon.git</connection>
+        <developerConnection>scm:git:git@github.com:qoobot-com/opendragon.git</developerConnection>
+        <url>https://github.com/qoobot-com/opendragon</url>
+        <tag>HEAD</tag>
+    </scm>
+    <properties>
+        <global.version>10.5.0-SNAPSHOT</global.version>
+        <java.version>25</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
+        <maven.compiler.test.source>25</maven.compiler.test.source>
+        <maven.compiler.test.target>25</maven.compiler.test.target>
+        <!-- Use the compiler release flag to ensure consistent target platform -->
+        <maven.compiler.release>25</maven.compiler.release>
+        <lombok.version>1.18.40</lombok.version>
+
+    </properties>
+
+
+    <modules>
+        <module>openadmin-parent</module>
+    </modules>
+
+    <profiles>
+        <profile>
+            <!-- Local 本地环境：开发者本地环境（个人机器） -->
+            <id>local</id>
+            <activation>
+                <property>
+                    <name>deploy.env</name>
+                    <value>local</value>
+                </property>
+				<activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <spring.profiles.active>local</spring.profiles.active>
+                <log.level>ERROR</log.level>
+				<build.classifier>SNAPSHOT</build.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <!-- Development Environment 开发环境：开发人员编写、调试代码，频繁变更，不稳定 -->
+            <id>dev</id>
+            <activation>
+                <property>
+                    <name>deploy.env</name>
+                    <value>dev</value>
+                </property>
+            </activation>
+            <properties>
+                <spring.profiles.active>dev</spring.profiles.active>
+                <log.level>ERROR</log.level>
+				<build.classifier>SNAPSHOT</build.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <!--Testing 测试环境：进行单元测试、功能测试、回归测试等 -->
+            <id>test</id>
+            <activation>
+                <property>
+                    <name>deploy.env</name>
+                    <value>test</value>
+                </property>
+            </activation>
+            <properties>
+                <spring.profiles.active>test</spring.profiles.active>
+                <log.level>ERROR</log.level>
+				<build.classifier>Alpha</build.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <!--System Integration Test 系统集成测试环境：验证各模块/系统集成后的功能和接口连通性（内测） -->
+            <id>sit</id>
+            <activation>
+                <property>
+                    <name>deploy.env</name>
+                    <value>sit</value>
+                </property>
+            </activation>
+            <properties>
+                <spring.profiles.active>sit</spring.profiles.active>
+                <log.level>ERROR</log.level>
+				<build.classifier>Beta</build.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <!--User Acceptance Test 用户验收测试环境：业务用户/客户进行验收测试，验证是否满足业务需求 -->
+            <id>uat</id>
+            <activation>
+                <property>
+                    <name>deploy.env</name>
+                    <value>uat</value>
+                </property>
+            </activation>
+            <properties>
+                <spring.profiles.active>uat</spring.profiles.active>
+                <log.level>ERROR</log.level>
+				<build.classifier>RC.1</build.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <!--Pre-production 预生产环境：完全模拟生产环境，进行上线前最后验证和演练 -->
+            <id>pre</id>
+            <activation>
+                <property>
+                    <name>deploy.env</name>
+                    <value>pre</value>
+                </property>
+            </activation>
+            <properties>
+                <spring.profiles.active>pre</spring.profiles.active>
+                <log.level>ERROR</log.level>
+				<build.classifier>RC.2</build.classifier>
+            </properties>
+        </profile>
+
+        <profile>
+            <!--Production 生产环境：正式线上环境，面向真实用户提供服务 -->
+            <id>prod</id>
+            <activation>
+                <property>
+                    <name>deploy.env</name>
+                    <value>prod</value>
+                </property>
+            </activation>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+                <log.level>ERROR</log.level>
+				<build.classifier>Release</build.classifier>
+            </properties>
+        </profile>
+
+    </profiles>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-webmvc</artifactId>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-devtools</artifactId>
+                <scope>runtime</scope>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-docker-compose</artifactId>
+                <scope>runtime</scope>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-webmvc-test</artifactId>
+                <scope>test</scope>
+            </dependency>
+            <!-- Centralize MySQL connector coordinates (relocated groupId) -->
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>8.0.33</version>
+            </dependency>
+        </dependencies>
+
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+				<encoding>UTF-8</encoding>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                            <version>${lombok.version}</version>
+                        </path>
+                        <path>
+                            <groupId>org.springframework.boot</groupId>
+                            <artifactId>spring-boot-configuration-processor</artifactId>
+                        </path>
+                    </annotationProcessorPaths>
+                    <!-- Use the Java release flag for consistent compilation -->
+                    <release>${maven.compiler.release}</release>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>
+                            <groupId>org.projectlombok</groupId>
+                            <artifactId>lombok</artifactId>
+                        </exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
+
